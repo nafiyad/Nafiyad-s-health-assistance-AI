@@ -6,19 +6,26 @@ exports.handler = async function(event, context) {
 
     const requestBody = JSON.parse(event.body);
 
-    const response = await fetch(endpointUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${API_KEY}`
-        },
-        body: JSON.stringify(requestBody)
-    });
+    try {
+        const response = await fetch(endpointUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${API_KEY}`
+            },
+            body: JSON.stringify(requestBody)
+        });
 
-    const data = await response.json();
+        const data = await response.json();
 
-    return {
-        statusCode: 200,
-        body: JSON.stringify(data)
-    };
+        return {
+            statusCode: 200,
+            body: JSON.stringify(data)
+        };
+    } catch (error) {
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: 'Internal Server Error' })
+        };
+    }
 };
