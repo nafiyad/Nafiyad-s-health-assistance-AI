@@ -18,11 +18,14 @@ exports.handler = async function(event, context) {
 
         const data = await response.json();
 
+        console.log(data);  // Log the data to check the response structure
+
         return {
             statusCode: 200,
             body: JSON.stringify(data)
         };
     } catch (error) {
+        console.error('Error:', error);  // Log any errors
         return {
             statusCode: 500,
             body: JSON.stringify({ error: 'Internal Server Error' })
